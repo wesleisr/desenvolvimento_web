@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <title>formulario</title>
+</head>
+
+<body>
+    <h2>Questão 1</h2>
+    <form>
+        <div class="aluno">
+            <fieldset>
+                <legend>Dados do aluno</legend>
+                <label>Nome:</label>
+                <input type="text" name="nome"><br>
+                <label>Idade:</label>
+                <input type="number" name="idade" class="idade">
+            </fieldset>
+        </div><!--div aluno-->
+        <div class="area">
+            <fieldset>
+                <legend>Área de atuação</legend>
+                <label>Programação:</label>
+                <select name="time">
+                    <option>Front-end</option>
+                    <option>Back-end</option>
+                    <option>Full-stack</option>
+                </select><br>
+                <label>Portifólio de atuação</label><br>
+                <input type="checkbox" name="comercial">
+                <label for="comercial"> Comercial</label><br>
+                <input type="checkbox" name="institucional">
+                <label for="institucional"> Insstitucional</label><br>
+                <input type="checkbox" name="blog">
+                <label for="blog"> Blog</label><br>
+                <input type="checkbox" name="wiki">
+                <label for="wiki"> Wiki</label><br>
+            </fieldset>
+        </div><!--div area-->
+    </form> 
+
+    <h2>Questão 2</h2>
+    <form>
+        <div class="form2">
+            <fieldset>
+                <label>Nome: </label>
+                <input type="text" name="nome"><br>
+                <label>Email: </label>
+                <input type="Email" name="email"><br>
+                <label>Tipo: </label>
+                    <input type="radio" name="tecnico">
+                    <label>Técnico</label>
+                    <input type="radio" name="professor">
+                    <label>Professor</label>
+                    <input type="radio" name="aluno">
+                    <label>Aluno</label><br>
+                <label>Setor de interesse: </label>
+                    <input type="checkbox" name="financeiro">
+                    <label>Financeiro</label>
+                    <input type="checkbox" name="informatica">
+                    <label>Informatica</label>
+                    <input type="checkbox" name="rh">
+                    <label>Recursos humanos</label><br>
+                <label>Solicitação: </label>
+                <textarea id="solicitacao"></textarea><br>
+                <input type="submit" name="enviar" value="Enviar">
+            </fieldset>
+        </div><!--div form2-->
+    </form>
+
+    <h2>Questão 3</h2>
+    <fieldset class="geral">
+        <legend>Cadastro geral</legend>
+        <fieldset class="dpessoais">
+            <legend>Dados pessoais</legend>
+            <label>Nome completo:</label><br>
+            <input type="text" name="nome"><br>
+            <label>Profissão:</label><br>
+            <select name="profssao">
+                <option>profissão 1</option>
+                <option>profissão 2</option>
+                <option>profissão 3</option>
+            </select><br>
+        </fieldset>
+        <fieldset class="localizacao">
+            <legend>Localização</legend>
+            <label>E-mail:</label><br>
+            <input type="email" name="email"><br>
+            <label>Rua:</label><br>
+            <input type="text" name="rua">
+        </fieldset>
+        <fieldset>
+            <legend>Faixa etária</legend>
+            <div class="coluna1">
+                <input type="radio" name="ate20">
+                <label>Até 20 anos</label><br>
+                <input type="radio" name="ate30">
+                <label>mais de 20 até 30 anos</label><br>
+                <input type="radio" name="ate40">
+                <label>mais de 30 até 40 anos</label>
+            </div>
+            <div class="coluna2">
+                <input type="radio" name="ate50">
+                <label>mais de 40 até 50 anos</label><br>
+                <input type="radio" name="ate60">
+                <label>mais de 50 até 60 anos</label><br>
+                <input type="radio" name="maisde60">
+                <label>mais de 60</label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Esportes que pratica</legend>
+            <input type="checkbox" name="fcampo">
+            <label>futebol de campo</label><br>
+            <input type="checkbox" name="fsalao">
+            <label>futebol de salão</label><br>
+            <input type="checkbox" name="society">
+            <label>futebol society</label><br>
+            <input type="checkbox" name="vquadra">
+            <label>volley de quadra</label><br>
+            <input type="checkbox" name="vpraia">
+            <label>volley de praia</label><br>
+            <input type="checkbox" name="picina">
+            <label>natação em picina</label><br>
+            <input type="checkbox" name="mar">
+            <label>natação em mar aberto</label><br>
+        </fieldset>
+        <fieldset>
+            <legend>Comentário</legend>
+            <label>mensagem:</label><br>
+            <input type="text" class="texto">
+        </fieldset>
+        <input type="submit" name="enviar" value="Enviar">
+        <input type="submit" name="limpar" value="Limpar">
+    </fieldset>
+    
+
+</body>
