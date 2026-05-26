@@ -1,0 +1,2001 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>System Ascension</title>
+
+<style>
+/* =========================================================
+   SYSTEM ASCENSION
+   SOLO LEVELING INSPIRED PRODUCTIVITY APP
+   SINGLE FILE APP
+========================================================= */
+
+:root{
+  --bg:#060816;
+  --bg2:#0d1124;
+  --card:#10172d;
+  --card2:#161f3d;
+  --neon:#45c7ff;
+  --purple:#8f5cff;
+  --green:#5dffb4;
+  --danger:#ff4d7a;
+  --gold:#ffd166;
+  --text:#eef4ff;
+  --muted:#8fa1c9;
+  --shadow:0 0 20px rgba(69,199,255,.25);
+  --radius:22px;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  background:
+    radial-gradient(circle at top left, rgba(69,199,255,.15), transparent 35%),
+    radial-gradient(circle at top right, rgba(143,92,255,.15), transparent 35%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter, system-ui, sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size:30px 30px;
+  opacity:.15;
+}
+
+.app{
+  max-width:500px;
+  margin:auto;
+  padding-bottom:100px;
+}
+
+header{
+  padding:24px 20px 10px;
+}
+
+.system-title{
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:2px;
+  background:linear-gradient(90deg,var(--neon),#fff,var(--purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.system-sub{
+  color:var(--muted);
+  margin-top:5px;
+  font-size:13px;
+}
+
+.screen{
+  display:none;
+  padding:15px 18px 120px;
+  animation:fade .35s ease;
+}
+
+.screen.active{
+  display:block;
+}
+
+@keyframes fade{
+  from{opacity:0; transform:translateY(10px)}
+  to{opacity:1; transform:translateY(0)}
+}
+
+.card{
+  background:linear-gradient(180deg,var(--card),var(--card2));
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:var(--radius);
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.card::after{
+  content:"";
+  position:absolute;
+  top:-40px;
+  right:-40px;
+  width:120px;
+  height:120px;
+  background:radial-gradient(circle, rgba(69,199,255,.15), transparent 70%);
+}
+
+.dashboard-top{
+  display:flex;
+  gap:16px;
+  align-items:center;
+}
+
+/* =========================================================
+   PIXEL AVATAR
+========================================================= */
+
+.avatar-wrap{
+  position:relative;
+}
+
+.avatar-aura{
+  position:absolute;
+  inset:-12px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(69,199,255,.3), transparent 65%);
+  animation:pulse 3s infinite;
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:.7}
+  50%{transform:scale(1.1);opacity:1}
+}
+
+.avatar{
+  width:92px;
+  height:92px;
+  border-radius:20px;
+  background:#1a2140;
+  position:relative;
+  overflow:hidden;
+  border:2px solid rgba(255,255,255,.08);
+  box-shadow:0 0 20px rgba(69,199,255,.4);
+}
+
+.pixel-head{
+  position:absolute;
+  width:42px;
+  height:42px;
+  background:#f1c27d;
+  left:50%;
+  top:15px;
+  transform:translateX(-50%);
+}
+
+.pixel-hair{
+  position:absolute;
+  width:46px;
+  height:18px;
+  background:#111;
+  left:50%;
+  top:10px;
+  transform:translateX(-50%);
+}
+
+.pixel-body{
+  position:absolute;
+  width:50px;
+  height:28px;
+  background:linear-gradient(180deg,var(--neon),var(--purple));
+  left:50%;
+  bottom:8px;
+  transform:translateX(-50%);
+}
+
+.avatar.level-high .avatar-aura{
+  background:radial-gradient(circle, rgba(143,92,255,.5), transparent 65%);
+}
+
+.player-info h2{
+  font-size:22px;
+  margin-bottom:6px;
+}
+
+.rank-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 12px;
+  border-radius:999px;
+  background:rgba(69,199,255,.12);
+  color:var(--neon);
+  font-size:13px;
+  font-weight:700;
+  border:1px solid rgba(69,199,255,.3);
+}
+
+.xp-box{
+  margin-top:16px;
+}
+
+.bar{
+  height:14px;
+  border-radius:999px;
+  background:#09101f;
+  overflow:hidden;
+  margin-top:10px;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.bar-fill{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--neon),var(--purple));
+  transition:width .5s ease;
+  box-shadow:0 0 20px rgba(69,199,255,.6);
+}
+
+.grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.stat-box{
+  padding:15px;
+  border-radius:18px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.04);
+}
+
+.label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.big{
+  font-size:22px;
+  margin-top:6px;
+  font-weight:800;
+}
+
+.section-title{
+  margin:12px 0 14px;
+  font-size:18px;
+  letter-spacing:1px;
+}
+
+.attributes{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.attr-row{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.attr-top{
+  display:flex;
+  justify-content:space-between;
+}
+
+.quest{
+  border-radius:20px;
+  padding:16px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.05);
+  margin-bottom:14px;
+  position:relative;
+  overflow:hidden;
+}
+
+.quest::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:4px;
+  height:100%;
+  background:linear-gradient(var(--neon),var(--purple));
+}
+
+.quest-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+}
+
+.quest-title{
+  font-size:16px;
+  font-weight:700;
+}
+
+.quest-tags{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.tag{
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:11px;
+  background:rgba(255,255,255,.05);
+  color:var(--muted);
+}
+
+.danger-btn{
+  background:linear-gradient(90deg,#ff4d7a,#ff7a7a)!important;
+  margin-top:10px!important;
+}
+
+.quest button,
+
+.btn{
+  border:none;
+  background:linear-gradient(90deg,var(--neon),var(--purple));
+  color:white;
+  padding:12px 16px;
+  border-radius:14px;
+  font-weight:700;
+  margin-top:14px;
+  width:100%;
+  box-shadow:0 0 20px rgba(69,199,255,.25);
+}
+
+.quest.completed{
+  opacity:.65;
+}
+
+.quest.completed button{
+  background:#25314f;
+}
+
+.shop-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:14px;
+  padding:16px;
+  border-radius:18px;
+  background:rgba(255,255,255,.03);
+}
+
+.small{
+  font-size:13px;
+  color:var(--muted);
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:rgba(6,8,22,.95);
+  backdrop-filter:blur(15px);
+  border-top:1px solid rgba(255,255,255,.05);
+  display:flex;
+  justify-content:center;
+  z-index:999;
+}
+
+.nav-inner{
+  width:100%;
+  max-width:500px;
+  display:flex;
+  justify-content:space-around;
+  padding:12px 8px;
+}
+
+.nav-btn{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  color:var(--muted);
+  font-size:11px;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.nav-btn.active{
+  color:var(--neon);
+  transform:translateY(-2px);
+  text-shadow:0 0 12px rgba(69,199,255,.8);
+}
+
+.nav-icon{
+  font-size:20px;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  top:30px;
+  transform:translateX(-50%) translateY(-20px);
+  background:linear-gradient(180deg,#132344,#0f1830);
+  border:1px solid rgba(69,199,255,.35);
+  padding:16px 22px;
+  border-radius:18px;
+  color:white;
+  z-index:2000;
+  opacity:0;
+  pointer-events:none;
+  transition:.4s;
+  box-shadow:0 0 30px rgba(69,199,255,.4);
+  text-align:center;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+.level-animation{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:3000;
+  opacity:0;
+  pointer-events:none;
+  transition:.4s;
+}
+
+.level-animation.show{
+  opacity:1;
+}
+
+.level-box{
+  text-align:center;
+  padding:40px;
+  border-radius:30px;
+  background:linear-gradient(180deg,#111b36,#0b1225);
+  border:1px solid rgba(69,199,255,.3);
+  box-shadow:0 0 40px rgba(69,199,255,.5);
+  animation:zoom .5s ease;
+}
+
+@keyframes zoom{
+  from{transform:scale(.7);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+.level-box h1{
+  font-size:44px;
+  background:linear-gradient(90deg,var(--neon),white,var(--purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.level-box p{
+  margin-top:12px;
+  color:var(--muted);
+}
+
+.input{
+  width:100%;
+  padding:14px;
+  border:none;
+  background:#0c1430;
+  border-radius:14px;
+  color:white;
+  margin-bottom:12px;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+select.input{
+  appearance:none;
+}
+
+.center{
+  text-align:center;
+}
+
+.rank-text{
+  font-size:36px;
+  font-weight:800;
+  background:linear-gradient(90deg,var(--neon),var(--purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.history-item{
+  padding:12px;
+  border-radius:14px;
+  background:rgba(255,255,255,.03);
+  margin-bottom:10px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* =========================================
+   EVOLVED AVATAR SYSTEM
+========================================= */
+
+.avatar.level-10 .pixel-body{
+  background:linear-gradient(180deg,#45c7ff,#8f5cff);
+  box-shadow:0 0 20px rgba(69,199,255,.6);
+}
+
+.avatar.level-10::before,
+.avatar.level-10::after{
+  content:"";
+  position:absolute;
+  width:12px;
+  height:26px;
+  background:#45c7ff;
+  top:46px;
+  border-radius:4px;
+  box-shadow:0 0 12px rgba(69,199,255,.7);
+}
+
+.avatar.level-10::before{
+  left:4px;
+}
+
+.avatar.level-10::after{
+  right:4px;
+}
+
+.avatar.level-20 .pixel-head{
+  box-shadow:
+    inset -8px 0 0 rgba(255,255,255,.05);
+}
+
+.avatar.level-20 .pixel-head::before,
+.avatar.level-20 .pixel-head::after{
+  content:"";
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:#45c7ff;
+  top:16px;
+  border-radius:50%;
+  box-shadow:0 0 12px #45c7ff;
+}
+
+.avatar.level-20 .pixel-head::before{
+  left:9px;
+}
+
+.avatar.level-20 .pixel-head::after{
+  right:9px;
+}
+
+.avatar.level-30{
+  animation:auraFloat 2s infinite ease-in-out;
+}
+
+@keyframes auraFloat{
+  0%,100%{
+    transform:translateY(0);
+  }
+  50%{
+    transform:translateY(-4px);
+  }
+}
+
+.avatar.level-50{
+  background:linear-gradient(180deg,#120b1f,#060816);
+  border-color:#8f5cff;
+  box-shadow:0 0 30px rgba(143,92,255,.8);
+}
+
+.avatar.level-50 .pixel-body{
+  background:linear-gradient(180deg,#8f5cff,#000);
+}
+
+.avatar.level-50 .pixel-hair{
+  background:#8f5cff;
+}
+
+.avatar.level-50::before{
+  content:"";
+  position:absolute;
+  inset:-20px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle,
+      rgba(143,92,255,.5),
+      transparent 70%);
+  animation:monarchAura 2s infinite;
+}
+
+@keyframes monarchAura{
+  0%,100%{
+    transform:scale(1);
+    opacity:.6;
+  }
+  50%{
+    transform:scale(1.15);
+    opacity:1;
+  }
+}
+
+/* =========================================
+   BOSS SYSTEM
+========================================= */
+
+.boss-card{
+  position:relative;
+  overflow:hidden;
+}
+
+.boss-name{
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:10px;
+  color:#ff4d7a;
+}
+
+.boss-hp{
+  margin-top:14px;
+}
+
+.boss-info{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+  font-size:13px;
+}
+
+.boss-bar{
+  height:18px;
+  border-radius:999px;
+  overflow:hidden;
+  background:#09101f;
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.boss-fill{
+  height:100%;
+  width:100%;
+  background:linear-gradient(90deg,#ff4d7a,#ff884d);
+  transition:width .4s ease;
+}
+
+.boss-requirements{
+  margin-top:16px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.req{
+  padding:10px;
+  border-radius:12px;
+  background:rgba(255,255,255,.03);
+  font-size:13px;
+}
+
+.req.done{
+  border:1px solid rgba(93,255,180,.4);
+  color:var(--green);
+}
+
+/* =========================================
+   CUSTOM SHOP
+========================================= */
+
+.shop-custom{
+  margin-top:20px;
+}
+
+.reward-item{
+  margin-top:12px;
+}
+
+.shop-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.coin-btn{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:10px 14px;
+  border-radius:14px;
+  border:none;
+  background:linear-gradient(90deg,var(--gold),#ffb84d);
+  color:#1a1200;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 0 15px rgba(255,209,102,.3);
+  transition:.2s;
+}
+
+.coin-btn:active{
+  transform:scale(.95);
+}
+
+.trash-btn{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  border:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,77,122,.15);
+  color:var(--danger);
+  font-size:18px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.trash-btn:active{
+  transform:scale(.9);
+  background:rgba(255,77,122,.25);
+}
+
+.price-tag{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  font-size:13px;
+  color:var(--gold);
+}
+
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="level-animation" id="levelAnimation">
+  <div class="level-box">
+    <h1>LEVEL UP</h1>
+    <p>Your evolution continues...</p>
+  </div>
+</div>
+
+<div class="app">
+
+<header>
+  <div class="system-title">SYSTEM ASCENSION</div>
+  <div class="system-sub">Personal Evolution Interface</div>
+</header>
+
+<!-- ======================================================
+     DASHBOARD
+====================================================== -->
+
+<section class="screen active" id="dashboard">
+
+  <div class="card">
+
+    <div class="dashboard-top">
+
+      <div class="avatar-wrap">
+        <div class="avatar-aura"></div>
+
+        <div class="avatar" id="avatar">
+          <div class="pixel-hair"></div>
+          <div class="pixel-head"></div>
+          <div class="pixel-body"></div>
+        </div>
+      </div>
+
+      <div class="player-info">
+        <h2 id="playerName">Hunter</h2>
+        <div class="rank-badge">
+          Rank <span id="rank">E</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="xp-box">
+      <div style="display:flex; justify-content:space-between">
+        <span>Level <b id="level">1</b></span>
+        <span id="xpText">0 / 100 XP</span>
+      </div>
+
+      <div class="bar">
+        <div class="bar-fill" id="xpBar"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="grid-2">
+
+    <div class="card">
+      <div class="label">Streak</div>
+      <div class="big" id="streak">0 🔥</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Coins</div>
+      <div class="big" id="coins">0 ⛁</div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <div class="section-title">Attributes</div>
+
+    <div class="attributes" id="attributes"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Reward Inventory</div>
+    <div id="rewardInventory"></div>
+  </div>
+
+  <!-- =========================================
+ADICIONE ESTE BLOCO NO DASHBOARD
+ANTES DO CARD "Daily Quests"
+========================================= -->
+
+<div class="card boss-card">
+
+  <div class="section-title">Boss Fight</div>
+
+  <div class="boss-name">
+    👁 Shadow Dungeon
+  </div>
+
+  <div class="small">
+    Defeat the dungeon boss through consistency.
+  </div>
+
+  <div class="boss-hp">
+
+    <div class="boss-info">
+      <span>Boss HP</span>
+      <span id="bossHpText">100%</span>
+    </div>
+
+    <div class="boss-bar">
+      <div class="boss-fill" id="bossBar"></div>
+    </div>
+
+  </div>
+
+  <div class="boss-requirements">
+
+    <div class="req" id="reqQuest">
+      Complete 5 quests
+    </div>
+
+    <div class="req" id="reqXP">
+      Earn 300 XP
+    </div>
+
+    <div class="req" id="reqStreak">
+      Reach 3 day streak
+    </div>
+
+  </div>
+
+</div>
+
+  <div class="card">
+    <div class="section-title">Daily Quests</div>
+    <div id="dailyQuests"></div>
+  </div>
+
+  
+
+</section>
+
+<!-- ======================================================
+     QUESTS
+====================================================== -->
+
+<section class="screen" id="quests">
+
+  <div class="card">
+    <div class="section-title">Create Quest</div>
+
+    <input class="input" id="questTitle" placeholder="Quest title" />
+
+    <select class="input" id="questType">
+      <option>Daily Quest</option>
+      <option>Weekly Quest</option>
+      <option>Main Quest</option>
+      <option>Side Quest</option>
+    </select>
+
+    <select class="input" id="questDifficulty">
+      <option value="20">Easy (+20 XP)</option>
+      <option value="40">Medium (+40 XP)</option>
+      <option value="70">Hard (+70 XP)</option>
+      <option value="120">Extreme (+120 XP)</option>
+    </select>
+
+    <select class="input" id="questAttribute">
+      <option>Força</option>
+      <option>Inteligência</option>
+      <option>Disciplina</option>
+      <option>Energia</option>
+      <option>Consistência</option>
+    </select>
+
+    <button class="btn" onclick="createQuest()">Create Quest</button>
+  </div>
+
+  <div id="questList"></div>
+
+</section>
+
+<!-- ======================================================
+     STATS
+====================================================== -->
+
+<section class="screen" id="stats">
+
+  <div class="card center">
+    <div class="label">CURRENT RANK</div>
+    <div class="rank-text" id="statsRank">E</div>
+  </div>
+
+  <div class="grid-2">
+
+    <div class="card">
+      <div class="label">Completed</div>
+      <div class="big" id="completedCount">0</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Total XP</div>
+      <div class="big" id="totalXP">0</div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <div class="section-title">History</div>
+    <div id="history"></div>
+  </div>
+
+</section>
+
+<!-- ======================================================
+     SHOP
+====================================================== -->
+
+<section class="screen" id="shop">
+
+  <div class="card">
+    <div class="section-title">Reward Store</div>
+
+    <div id="shopList"></div>
+
+  </div>
+
+  <!-- =========================================
+ADICIONE ESTE BLOCO NO SHOP
+ANTES DO </section>
+========================================= -->
+
+<div class="card shop-custom">
+
+  <div class="section-title">Create Shop Item</div>
+
+  <input class="input" id="rewardName" placeholder="Reward name" />
+
+  <input class="input" id="rewardPrice" type="number" placeholder="Price" />
+
+  <input class="input" id="rewardDuration" type="number" placeholder="Duration in minutes" />
+
+  <button class="btn" onclick="createShopReward()">
+    Create Reward
+  </button>
+
+</div>
+
+</section>
+
+<!-- ======================================================
+     PROFILE
+====================================================== -->
+
+<section class="screen" id="profile">
+
+  <div class="card center">
+
+    <div class="avatar-wrap" style="display:inline-block; margin-bottom:20px">
+      <div class="avatar-aura"></div>
+
+      <div class="avatar">
+        <div class="pixel-hair"></div>
+        <div class="pixel-head"></div>
+        <div class="pixel-body"></div>
+      </div>
+    </div>
+
+    <h2 id="profileLevel">Level 1</h2>
+    <div class="small">System User</div>
+
+  </div>
+
+  <div class="card">
+    <div class="section-title">Rename Hunter</div>
+
+    <input class="input" id="newName" placeholder="Enter new name" />
+
+    <button class="btn" onclick="changeName()">Save</button>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Danger Zone</div>
+
+    <div class="small" style="margin-bottom:14px">
+      Reset all levels, quests, coins, streaks and evolution progress.
+    </div>
+
+    <button class="btn danger-btn" onclick="resetProgress()">
+      Reset Entire Progress
+    </button>
+  </div>
+
+</section>
+
+</div>
+
+<!-- ======================================================
+     NAVIGATION
+====================================================== -->
+
+<div class="bottom-nav">
+
+  <div class="nav-inner">
+
+    <div class="nav-btn active" onclick="showScreen('dashboard', this)">
+      <div class="nav-icon">⌂</div>
+      <span>Home</span>
+    </div>
+
+    <div class="nav-btn" onclick="showScreen('quests', this)">
+      <div class="nav-icon">⚔</div>
+      <span>Quests</span>
+    </div>
+
+    <div class="nav-btn" onclick="showScreen('stats', this)">
+      <div class="nav-icon">◈</div>
+      <span>Stats</span>
+    </div>
+
+    <div class="nav-btn" onclick="showScreen('shop', this)">
+      <div class="nav-icon">⛁</div>
+      <span>Shop</span>
+    </div>
+
+    <div class="nav-btn" onclick="showScreen('profile', this)">
+      <div class="nav-icon">☻</div>
+      <span>Profile</span>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+/* =========================================================
+   SYSTEM ASCENSION
+   JAVASCRIPT CORE
+========================================================= */
+
+const STORAGE_KEY = 'systemAscensionData';
+
+const ranks = [
+  { level:1, rank:'E' },
+  { level:5, rank:'D' },
+  { level:10, rank:'C' },
+  { level:15, rank:'B' },
+  { level:20, rank:'A' },
+  { level:30, rank:'S' },
+  { level:50, rank:'Monarch' }
+];
+
+/* =========================================================
+   INITIAL DATA
+========================================================= */
+
+
+
+let data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+
+  
+
+  playerName:'Hunter',
+
+  level:1,
+  xp:0,
+  coins:0,
+  streak:0,
+  totalXP:0,
+  completed:0,
+
+
+lastDailyReset:new Date().toDateString(),
+
+lastWeeklyReset:Date.now(),
+
+dailyCompletedToday:0,
+
+boss:{
+  hp:1000,
+  maxHp:1000,
+  defeated:false
+},
+
+shopRewards:[
+  {
+    name:'🎮 Gaming Session',
+    price:50,
+    duration:60
+  },
+
+  {
+    name:'🎬 Anime Night',
+    price:80,
+    duration:90
+  },
+
+  {
+    name:'🍔 Favorite Food',
+    price:120,
+    duration:30
+  }
+],
+
+  attributes:{
+    'Força':1,
+    'Inteligência':1,
+    'Disciplina':1,
+    'Energia':1,
+    'Consistência':1
+  },
+
+  history:[],
+
+  quests:[
+    {
+      id:Date.now()+1,
+      title:'50 Flexões',
+      type:'Daily Quest',
+      difficulty:'Medium',
+      xp:40,
+      attribute:'Força',
+      completed:false
+    },
+
+    {
+      id:Date.now()+2,
+      title:'Estudar inglês 30 min',
+      type:'Daily Quest',
+      difficulty:'Easy',
+      xp:20,
+      attribute:'Inteligência',
+      completed:false
+    },
+
+    {
+      id:Date.now()+3,
+      title:'Dormir 8 horas',
+      type:'Side Quest',
+      difficulty:'Easy',
+      xp:20,
+      attribute:'Energia',
+      completed:false
+    }
+  ]
+};
+
+/* =========================================
+   FIX OLD SAVES
+========================================= */
+
+if(!data.shopRewards){
+
+  data.shopRewards = [
+
+    {
+      name:'🍔 Favorite Food',
+      price:120,
+      duration:30
+    }
+
+  ];
+}
+
+if(!data.activeRewards){
+  data.activeRewards = [];
+}
+
+if(!data.boss){
+
+  data.boss = {
+    hp:1000,
+    maxHp:1000,
+    defeated:false
+  };
+}
+
+
+
+/* =========================================================
+   SAVE SYSTEM
+========================================================= */
+
+function save(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+/* =========================================================
+   SCREEN NAVIGATION
+========================================================= */
+
+function showScreen(id, btn){
+
+  document.querySelectorAll('.screen').forEach(screen=>{
+    screen.classList.remove('active');
+  });
+
+  document.getElementById(id).classList.add('active');
+
+  document.querySelectorAll('.nav-btn').forEach(b=>{
+    b.classList.remove('active');
+  });
+
+  btn.classList.add('active');
+}
+
+/* =========================================================
+   RANK SYSTEM
+========================================================= */
+
+function getRank(level){
+
+  let current = 'E';
+
+  ranks.forEach(r=>{
+    if(level >= r.level){
+      current = r.rank;
+    }
+  });
+
+  return current;
+}
+
+/* =========================================================
+   XP REQUIREMENT
+========================================================= */
+
+function xpNeeded(level){
+  return 100 + (level-1) * 35;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function toast(message){
+
+  const el = document.getElementById('toast');
+
+  el.innerHTML = message;
+  el.classList.add('show');
+
+  setTimeout(()=>{
+    el.classList.remove('show');
+  },2500);
+}
+
+/* =========================================================
+   SOUND EFFECTS
+========================================================= */
+
+function playTone(freq, duration){
+
+  const ctx = new(window.AudioContext || window.webkitAudioContext)();
+
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.frequency.value = freq;
+  osc.type = 'sine';
+
+  gain.gain.value = .03;
+
+  osc.start();
+
+  setTimeout(()=>{
+    osc.stop();
+  },duration);
+}
+
+/* =========================================================
+   LEVEL UP
+========================================================= */
+
+function levelUp(){
+
+  data.level++;
+
+  const animation = document.getElementById('levelAnimation');
+
+  animation.classList.add('show');
+
+  playTone(700,200);
+  playTone(900,300);
+
+  toast('⚡ LEVEL UP ⚡');
+
+  setTimeout(()=>{
+    animation.classList.remove('show');
+  },2000);
+
+  if(data.level === 5 || data.level === 10 || data.level === 15 || data.level === 20 || data.level === 30 || data.level === 50){
+    toast('👑 Rank Increased');
+  }
+}
+
+/* =========================================================
+   COMPLETE QUEST
+========================================================= */
+
+function completeQuest(id){
+
+  const quest = data.quests.find(q=>q.id === id);
+
+  if(!quest || quest.completed) return;
+
+  quest.completed = true;
+
+  /* =========================================
+ADICIONE DENTRO DE completeQuest()
+APÓS:
+quest.completed = true;
+========================================= */
+
+if(quest.type === 'Daily Quest'){
+  data.dailyCompletedToday++;
+}
+
+  data.xp += quest.xp;
+  data.totalXP += quest.xp;
+  data.coins += Math.floor(quest.xp / 2);
+  data.completed++;
+  data.streak++;
+
+  data.attributes[quest.attribute] += 1;
+
+  data.history.unshift(`Completed: ${quest.title} (+${quest.xp} XP)`);
+
+  toast('✓ Quest Complete');
+
+  playTone(500,100);
+
+  while(data.xp >= xpNeeded(data.level)){
+
+    data.xp -= xpNeeded(data.level);
+
+    levelUp();
+  }
+
+  /* =========================================
+ADICIONE DENTRO DE completeQuest()
+ANTES DO save();
+========================================= */
+
+updateBossProgress();
+
+  save();
+  render();
+}
+
+/* =========================================================
+   CREATE QUEST
+========================================================= */
+
+function deleteQuest(id){
+
+  data.quests = data.quests.filter(q => q.id !== id);
+
+  save();
+  render();
+
+  toast('Quest deleted');
+}
+
+/* =========================================================
+   CREATE QUEST
+========================================================= */
+
+function createQuest(){
+
+  const title = document.getElementById('questTitle').value;
+  const type = document.getElementById('questType').value;
+  const xp = parseInt(document.getElementById('questDifficulty').value);
+  const difficulty = document.getElementById('questDifficulty').selectedOptions[0].text;
+  const attribute = document.getElementById('questAttribute').value;
+
+  if(!title.trim()){
+    toast('Insert a quest title');
+    return;
+  }
+
+  data.quests.unshift({
+    id:Date.now(),
+    title,
+    type,
+    difficulty,
+    xp,
+    attribute,
+    completed:false
+  });
+
+  document.getElementById('questTitle').value = '';
+
+  save();
+  render();
+
+  toast('New Quest Added');
+}
+
+/* =========================================
+ADICIONE ESTA FUNÇÃO
+========================================= */
+
+function updateBossProgress(){
+
+  const questsDone = data.completed >= 5;
+  const xpDone = data.totalXP >= 300;
+  const streakDone = data.streak >= 3;
+
+  const reqQuest = document.getElementById('reqQuest');
+  const reqXP = document.getElementById('reqXP');
+  const reqStreak = document.getElementById('reqStreak');
+
+  if(reqQuest) reqQuest.classList.toggle('done', questsDone);
+  if(reqXP) reqXP.classList.toggle('done', xpDone);
+  if(reqStreak) reqStreak.classList.toggle('done', streakDone);
+
+  let damage = 0;
+
+  if(questsDone) damage += 300;
+  if(xpDone) damage += 300;
+  if(streakDone) damage += 400;
+
+  data.boss.hp = Math.max(
+    data.boss.maxHp - damage,
+    0
+  );
+
+  if(data.boss.hp <= 0 && !data.boss.defeated){
+
+    data.boss.defeated = true;
+
+    data.coins += 500;
+
+    toast('👑 BOSS DEFEATED');
+
+    playTone(300,200);
+    playTone(500,200);
+    playTone(800,300);
+  }
+}
+
+/* =========================================
+ADICIONE ESTA FUNÇÃO
+========================================= */
+
+function renderBoss(){
+
+  const percent =
+    (data.boss.hp / data.boss.maxHp) * 100;
+
+  document.getElementById('bossBar').style.width =
+    percent + '%';
+
+  document.getElementById('bossHpText').textContent =
+    Math.floor(percent) + '%';
+
+  updateBossProgress();
+}
+
+
+
+/* =========================================================
+   SHOP SYSTEM
+========================================================= */
+
+/* =========================================
+ADICIONE ESTA FUNÇÃO
+========================================= */
+
+function renderShop(){
+
+  const shop = document.getElementById('shopList');
+
+  if(!shop) return;
+
+  shop.innerHTML = '';
+
+  data.shopRewards.forEach((item,index)=>{
+
+    shop.innerHTML += `
+
+      <div class="shop-item">
+
+        <div>
+
+          <div>${item.name}</div>
+
+          <div class="price-tag">
+            ⛁ ${item.duration} min
+          </div>
+
+        </div>
+
+        <div class="shop-actions">
+
+          <button class="coin-btn" onclick="buyReward(${index})">
+            ⛁ ${item.price}
+          </button>
+
+          <button class="trash-btn" onclick="deleteShopReward(${index})">
+            🗑
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+  });
+}
+
+/* =========================================
+ADICIONE ESTA FUNÇÃO
+========================================= */
+
+function createShopReward(){
+  alert("O evento onclick está funcionando!");
+
+  const name = document.getElementById('rewardName').value;
+  const price = parseInt(document.getElementById('rewardPrice').value);
+  const duration = parseInt(document.getElementById('rewardDuration').value);
+
+  if(!name || !price || !duration){
+    toast('Fill all fields');
+    return;
+  }
+
+  data.shopRewards.push({
+    name,
+    price,
+    duration
+  });
+
+  document.getElementById('rewardName').value = '';
+  document.getElementById('rewardPrice').value = '';
+  document.getElementById('rewardDuration').value = '';
+
+  toast('Reward created');
+
+  save();
+  render();
+}
+
+function deleteShopReward(index){
+
+  const confirmDelete = confirm('Delete this reward?');
+
+  if(!confirmDelete) return;
+
+  data.shopRewards.splice(index, 1);
+
+  save();
+  render();
+
+  toast('Reward deleted');
+}
+
+function buyReward(index){
+
+  const item = data.shopRewards[index];
+
+  if(data.coins < item.price){
+    toast('Not enough coins');
+    return;
+  }
+
+  data.coins -= item.price;
+
+  if(!data.activeRewards){
+    data.activeRewards = [];
+  }
+
+  data.activeRewards.push({
+    id:Date.now(),
+    name:item.name,
+    duration:item.duration,
+    active:false,
+    start:null
+  });
+
+  toast('Reward unlocked');
+
+  playTone(800,150);
+
+  save();
+  render();
+}
+
+/* =========================================================
+   CHANGE NAME
+========================================================= */
+
+function changeName(){
+
+  const newName = document.getElementById('newName').value;
+
+  if(!newName.trim()) return;
+
+  data.playerName = newName;
+
+  save();
+  render();
+
+  toast('Name updated');
+}
+
+/* =========================================================
+   RESET PROGRESS
+========================================================= */
+
+/* =========================================
+ADICIONE ESTA FUNÇÃO
+========================================= */
+
+function checkDailyReset(){
+
+  const today = new Date().toDateString();
+
+  if(data.lastDailyReset !== today){
+
+    if(data.dailyCompletedToday <= 0){
+
+      data.streak = 0;
+
+      data.coins = Math.max(0, data.coins - 30);
+
+      data.xp = Math.max(0, data.xp - 50);
+
+      toast('⚠ Streak Lost');
+
+      while(data.level > 1 && data.xp < 0){
+
+        data.level--;
+      }
+    }
+
+    data.dailyCompletedToday = 0;
+
+    data.quests.forEach(q=>{
+
+      if(q.type === 'Daily Quest'){
+        q.completed = false;
+      }
+    });
+
+    data.lastDailyReset = today;
+  }
+
+  const weekPassed =
+    Date.now() - data.lastWeeklyReset >
+    1000 * 60 * 60 * 24 * 7;
+
+  if(weekPassed){
+
+    data.quests.forEach(q=>{
+
+      if(q.type === 'Weekly Quest'){
+        q.completed = false;
+      }
+    });
+
+    data.lastWeeklyReset = Date.now();
+  }
+}
+
+function resetProgress(){
+
+  const firstCheck = confirm('WARNING: This will erase ALL progress permanently. Continue?');
+
+  if(!firstCheck) return;
+
+  const secondCheck = confirm('FINAL CONFIRMATION: Reset your entire system evolution?');
+
+  if(!secondCheck) return;
+
+  localStorage.removeItem(STORAGE_KEY);
+
+  toast('System Reset Complete');
+
+  setTimeout(()=>{
+    location.reload();
+  },1000);
+}
+
+/* =========================================================
+   RENDER ATTRIBUTES
+========================================================= */
+
+function renderAttributes(){
+
+  const wrap = document.getElementById('attributes');
+
+  wrap.innerHTML = '';
+
+  Object.entries(data.attributes).forEach(([name, value])=>{
+
+    wrap.innerHTML += `
+      <div class="attr-row">
+
+        <div class="attr-top">
+          <span>${name}</span>
+          <span>${value}</span>
+        </div>
+
+        <div class="bar">
+          <div class="bar-fill" style="width:${Math.min(value*5,100)}%"></div>
+        </div>
+
+      </div>
+    `;
+  });
+}
+
+/* =========================================================
+   RENDER QUESTS
+========================================================= */
+
+function renderQuests(){
+
+  const list = document.getElementById('questList');
+  const daily = document.getElementById('dailyQuests');
+
+  list.innerHTML = '';
+  daily.innerHTML = '';
+
+  data.quests.forEach(q=>{
+
+    const html = `
+      <div class="quest ${q.completed ? 'completed' : ''}">
+
+        <div class="quest-top">
+
+          <div>
+            <div class="quest-title">${q.title}</div>
+
+            <div class="quest-tags">
+              <div class="tag">${q.type}</div>
+              <div class="tag">${q.attribute}</div>
+              <div class="tag">+${q.xp} XP</div>
+            </div>
+          </div>
+
+        </div>
+
+        <button onclick="completeQuest(${q.id})">
+          ${q.completed ? 'Completed' : 'Complete Quest'}
+        </button>
+
+      </div>
+    `;
+
+    const questScreenHtml = `
+      <div class="quest ${q.completed ? 'completed' : ''}">
+
+        <div class="quest-top">
+
+          <div>
+            <div class="quest-title">${q.title}</div>
+
+            <div class="quest-tags">
+              <div class="tag">${q.type}</div>
+              <div class="tag">${q.attribute}</div>
+              <div class="tag">+${q.xp} XP</div>
+            </div>
+          </div>
+
+        </div>
+
+        <button onclick="completeQuest(${q.id})">
+          ${q.completed ? 'Completed' : 'Complete Quest'}
+        </button>
+
+        <button class="danger-btn" onclick="deleteQuest(${q.id})">
+          Delete Quest
+        </button>
+
+      </div>
+    `;
+
+    list.innerHTML += questScreenHtml;
+
+    if(q.type === 'Daily Quest'){
+      daily.innerHTML += html;
+    }
+  });
+}
+
+/* =========================================================
+   RENDER HISTORY
+========================================================= */
+
+function startReward(id){
+
+  const reward = data.activeRewards.find(r=>r.id === id);
+
+  if(!reward || reward.active) return;
+
+  reward.active = true;
+  reward.start = Date.now();
+
+  toast('Reward Activated');
+
+  save();
+  render();
+}
+
+/* =========================================================
+   RENDER REWARD INVENTORY
+========================================================= */
+
+function renderRewards(){
+
+  const wrap = document.getElementById('rewardInventory');
+
+  wrap.innerHTML = '';
+
+  if(!data.activeRewards || data.activeRewards.length === 0){
+    wrap.innerHTML = '<div class="small">No rewards purchased yet</div>';
+    return;
+  }
+
+  data.activeRewards.forEach(reward=>{
+
+    let remaining = reward.duration * 60;
+
+    if(reward.active && reward.start){
+
+      const elapsed = Math.floor((Date.now() - reward.start)/1000);
+      remaining = Math.max(0, remaining - elapsed);
+    }
+
+    const mins = Math.floor(remaining / 60);
+    const secs = remaining % 60;
+
+    const ended = remaining <= 0;
+
+    wrap.innerHTML += `
+
+      <div class="quest ${reward.active ? 'completed' : ''}">
+
+        <div class="quest-title">${reward.name}</div>
+
+        <div class="quest-tags">
+          <div class="tag">${reward.duration} min</div>
+
+          <div class="tag">
+            ${ended ? 'Finished' : `${mins}:${secs.toString().padStart(2,'0')}`}
+          </div>
+        </div>
+
+        ${!reward.active ? `
+          <button onclick="startReward(${reward.id})">
+            Activate Reward
+          </button>
+        ` : `
+          <button>
+            ${ended ? 'Reward Finished' : 'Reward Active'}
+          </button>
+        `}
+
+      </div>
+
+    `;
+  });
+}
+
+function renderHistory(){
+
+  const history = document.getElementById('history');
+
+  history.innerHTML = '';
+
+  if(data.history.length === 0){
+    history.innerHTML = '<div class="small">No activity yet</div>';
+    return;
+  }
+
+  data.history.slice(0,10).forEach(item=>{
+    history.innerHTML += `<div class="history-item">${item}</div>`;
+  });
+}
+
+/* =========================================================
+   MAIN RENDER
+========================================================= */
+
+function render(){
+
+  const needed = xpNeeded(data.level);
+  const percent = (data.xp / needed) * 100;
+
+  document.getElementById('level').textContent = data.level;
+  document.getElementById('xpText').textContent = `${data.xp} / ${needed} XP`;
+
+  document.getElementById('xpBar').style.width = percent + '%';
+
+  document.getElementById('coins').textContent = data.coins + ' ⛁';
+  document.getElementById('streak').textContent = data.streak + ' 🔥';
+
+  document.getElementById('rank').textContent = getRank(data.level);
+  document.getElementById('statsRank').textContent = getRank(data.level);
+
+  document.getElementById('playerName').textContent = data.playerName;
+  document.getElementById('profileLevel').textContent = `Level ${data.level}`;
+
+  document.getElementById('completedCount').textContent = data.completed;
+  document.getElementById('totalXP').textContent = data.totalXP;
+
+  const avatar = document.getElementById('avatar');
+
+avatar.className = 'avatar';
+
+if(data.level >= 10){
+  avatar.classList.add('level-10');
+}
+
+if(data.level >= 20){
+  avatar.classList.add('level-20');
+}
+
+if(data.level >= 30){
+  avatar.classList.add('level-30');
+}
+
+if(data.level >= 50){
+  avatar.classList.add('level-50');
+}
+
+  renderAttributes();
+  renderRewards();
+  renderQuests();
+  renderHistory();
+
+  save();
+}
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+checkDailyReset();
+render();
+renderShop();
+renderBoss();
+
+</script>
+
+</body>
+</html>
