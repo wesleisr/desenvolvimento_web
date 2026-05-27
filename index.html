@@ -1124,6 +1124,8 @@ lastWeeklyReset:Date.now(),
 
 dailyCompletedToday:0,
 
+lastStreakDate:null,
+
 boss:{
   hp:1000,
   maxHp:1000,
@@ -1357,6 +1359,8 @@ function completeQuest(id){
 
   quest.completed = true;
 
+  updateStreak();
+
   /* =========================================
 ADICIONE DENTRO DE completeQuest()
 APÓS:
@@ -1371,7 +1375,6 @@ if(quest.type === 'Daily Quest'){
   data.totalXP += quest.xp;
   data.coins += Math.floor(quest.xp / 2);
   data.completed++;
-  data.streak++;
 
   data.attributes[quest.attribute] += 1;
 
@@ -1670,7 +1673,13 @@ function checkDailyReset(){
 
   if(data.lastDailyReset !== today){
 
-    if(data.dailyCompletedToday <= 0){
+    const yesterday = new Date();
+
+yesterday.setDate(yesterday.getDate() - 1);
+
+if(
+  data.lastStreakDate !== yesterday.toDateString()
+){
 
       data.streak = 0;
 
@@ -1991,6 +2000,36 @@ if(data.level >= 50){
 ========================================================= */
 
 checkDailyReset();
+
+function updateStreak(){
+
+  const today = new Date().toDateString();
+
+  if(data.lastStreakDate === today){
+    return;
+  }
+
+  const yesterday = new Date();
+
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const yesterdayString = yesterday.toDateString();
+
+  if(
+    data.lastStreakDate === yesterdayString
+    || data.lastStreakDate === null
+  ){
+
+    data.streak++;
+
+  }else{
+
+    data.streak = 1;
+  }
+
+  data.lastStreakDate = today;
+}
+
 render();
 renderShop();
 renderBoss();
